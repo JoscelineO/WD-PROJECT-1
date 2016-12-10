@@ -1,3 +1,11 @@
-body {
-  background-color: pink;
+
+
+div.randomSpots{
+  border-radius: 50%;
+  position: absolute;
+
 }
+
+
+
+/*//http://www.css-jquery-design.com/2014/07/animated-bubbles-upwards-continuously-with-pure-css/ */
