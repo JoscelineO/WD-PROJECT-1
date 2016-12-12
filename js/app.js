@@ -3,15 +3,15 @@ var Game = Game || {};
 Game.makeRandomSpots = function(i) {
   var colorOfSpot;
 
-  if (i <= 4){
+  if (i <= 8){
     colorOfSpot = this.backgroundColours[0];
-  } else if(i <= 8){
-    colorOfSpot = this.backgroundColours[1];
-  } else if(i <= 12){
-    colorOfSpot = this.backgroundColours[2];
   } else if(i <= 16){
+    colorOfSpot = this.backgroundColours[1];
+  } else if(i <= 24){
+    colorOfSpot = this.backgroundColours[2];
+  } else if(i <= 32){
     colorOfSpot = this.backgroundColours[3];
-  } else if(i <= 20){
+  } else if(i <= 40){
     colorOfSpot = this.backgroundColours[4];
   }
   // vary spots size
@@ -30,24 +30,29 @@ Game.makeRandomSpots = function(i) {
     'top': posy +'px'
   }).attr('class', 'randomSpots');
 
-  $('main').append($randomSpots).hide().fadeIn(1000);
+  $('main').append($randomSpots).hide().fadeIn(2000);
 
   $($randomSpots).on('click', function() {
 
     if ($(this).css('background-color') === Game.randomColor){
       Game.score++;
-      $('#counter span').html('' + Game.score);
+    } else {
+      Game.score--;
     }
+    $('#counter span').html('' + Game.score);
     $(this).remove();
   });
 
   setTimeout(function() {
-    $($randomSpots).fadeOut(5000);
+    $($randomSpots).fadeOut(7000, function(){
+      $($randomSpots).remove();
+    });
   }, 1000);
+
 };
 
 Game.showSpots = function() {
-  for (var i = 0; i < 20; i++) {
+  for (var i = 0; i < 40; i++) {
     this.makeRandomSpots(i);
   }
 };
@@ -55,13 +60,25 @@ Game.showSpots = function() {
 Game.giveBackgroundColor = function() {
   var self = this;
   this.randomColor = this.backgroundColours[Math.floor(Math.random()*this.backgroundColours.length)];
-  $('main').css('background', this.randomColor);
 
-  setTimeout(function() {
-    $('main').css('background', '#fff');
-    self.showSpots();
-  }, 2000
-);
+  $('main').animate({
+    backgroundColor: self.randomColor
+  }, 1000, function() {
+    $('main').animate({
+      backgroundColor: '#fff'
+    }, 2000);
+    setTimeout(function(){
+      self.showSpots();
+    }, 2000);
+
+  });
+
+
+  //   setTimeout(function() {
+  //     $('main').css('background', '#fff');
+  //     self.showSpots();
+  //   }, 3000
+  // );
 };
 
 
