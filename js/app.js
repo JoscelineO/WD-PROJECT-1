@@ -3,20 +3,25 @@ var Game = Game || {};
 Game.nextLevel = function() {
   Game.bubbles+=10;
   Game.giveBackgroundColor();
+  Game.score = 0;
 };
 
 Game.showScore = function() {
-  Game.scoreDisplay.show().html(Game.score);
-  Game.exit.show().on('click', function() {
+  Game.scoreDisplay.fadeIn(3000).html(Game.score);
+
+  Game.exit.fadeIn(3000).click(function() {
+    Game.playing = false;
+    Game.scoreDisplay.hide();
+    Game.exit.hide();
     Game.showInstructions();
+    Game.bubbles      = 20;
   });
 
   setTimeout(function() {
-    Game.scoreDisplay.hide();
-    Game.exit.hide();
+    Game.scoreDisplay.fadeOut(3000);
+    Game.exit.fadeOut(3000).off('click');
     Game.nextLevel();
-  }, 3000);
-
+  }, 6000);
 };
 
 Game.appendSpots = function() {
@@ -89,26 +94,30 @@ Game.showSpots = function() {
 };
 
 Game.giveBackgroundColor = function() {
-  var self = this;
-  this.randomColor = this.backgroundColours[Math.floor(Math.random()*this.backgroundColours.length)];
+  if(this.playing) {
+    var self = this;
+    this.randomColor = this.backgroundColours[Math.floor(Math.random()*this.backgroundColours.length)];
 
-  $('main').animate({
-    backgroundColor: self.randomColor
-  }, 3000, function() {
-    setTimeout(function() {
-      $('main').animate({
-        backgroundColor: '#fff'
-      }, 3000, function() {
-        self.showSpots();
-      });
-    }, 1000);
-  });
+    $('main').animate({
+      backgroundColor: self.randomColor
+    }, 3000, function() {
+      setTimeout(function() {
+        $('main').animate({
+          backgroundColor: '#FDFDFD'
+        }, 3000, function() {
+          self.showSpots();
+        });
+      }, 1000);
+    });
+  }
 };
 
 Game.showInstructions = function() {
+  $('.start').off('click');
   this.instructions.fadeIn(3000);
 
   $('.start').on('click', function() {
+    Game.playing = true;
     Game.instructions.fadeOut(3000);
     setTimeout(function() {
       Game.giveBackgroundColor();
@@ -118,22 +127,24 @@ Game.showInstructions = function() {
 
 Game.setup = function() {
   this.backgroundColours = [
-    'rgb(46, 66, 114)',
-    'rgb(50, 138, 46)',
+    'rgb(52, 89, 149)',
+    'rgb(251, 77, 61)',
     'rgb(170, 57, 57)',
-    'rgb(89, 42, 113)',
-    'rgb(225, 220, 40)'
+    'rgb(32, 163, 158)',
+    'rgb(255, 212, 84)'
   ];
   this.score = 0;
   this.instructions = $('.instructions');
-  this.instructions.hide();
-  this.showInstructions();
+  this.exit         = $('#exit');
   this.scoreDisplay = $('#score');
+  this.instructions.hide();
   this.scoreDisplay.hide();
-  this.exit = $('#exit');
+  this.scoreDisplay.hide();
   this.exit.hide();
+  this.showInstructions();
   this.bubbles      = 20;
   this.array        = [];
+  this.playing      = true;
 };
 
 $(Game.setup.bind(Game));
