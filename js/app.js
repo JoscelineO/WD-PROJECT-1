@@ -114,9 +114,15 @@ Game.giveBackgroundColor = function() {
 
 Game.showInstructions = function() {
   $('.start').off('click');
+  $('.start').css({
+    'background-color': 'rgb(32, 163, 158)'
+  });
   this.instructions.fadeIn(3000);
 
   $('.start').on('click', function() {
+    $('.start').css({
+      'background-color': '#FDFDFD'
+    });
     Game.playing = true;
     Game.instructions.fadeOut(3000);
     setTimeout(function() {
