@@ -117,17 +117,17 @@ Game.showInstructions = function() {
   $('.start').css({
     'background-color': 'rgb(32, 163, 158)'
   });
-  this.instructions.fadeIn(3000);
-
-  $('.start').on('click', function() {
-    $('.start').css({
-      'background-color': '#FDFDFD'
+  this.instructions.fadeIn(3000, function() {
+    $('.start').on('click', function() {
+      $('.start').css({
+        'background-color': '#FDFDFD'
+      });
+      Game.playing = true;
+      Game.instructions.fadeOut(3000);
+      setTimeout(function() {
+        Game.giveBackgroundColor();
+      }, 3000);
     });
-    Game.playing = true;
-    Game.instructions.fadeOut(3000);
-    setTimeout(function() {
-      Game.giveBackgroundColor();
-    }, 3000);
   });
 };
 
