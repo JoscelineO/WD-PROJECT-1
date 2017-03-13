@@ -2,7 +2,7 @@
 
 ## Fade
 
-![Fade image] (/Users/Josceline/development/WDI_PROJECT_1/images/Fade-ReadMe-Image-01.jpg)
+![Fade image] (images/Fade-ReadMe-Image-01.jpg)
 
 ### Introduction
 
