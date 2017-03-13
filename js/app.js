@@ -98,6 +98,7 @@ Game.giveBackgroundColor = function() {
     var self = this;
     this.randomColor = this.backgroundColours[Math.floor(Math.random()*this.backgroundColours.length)];
 
+
     $('main').animate({
       backgroundColor: self.randomColor
     }, 3000, function() {
